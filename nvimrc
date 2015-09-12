@@ -256,6 +256,12 @@ set autoindent
 " no backups after overwriting a file
 set nobackup
 
+" In insert mode, <C-u> deletes the text typed on the current line, and <C-w>
+" deletes the word before the cursor. This mapping begins a new change, so that
+" the deletion can be undone.
+inoremap <C-u> <C-g>u<C-u>
+inoremap <C-w> <C-g>u<C-w>
+
 
 " -- Mouse ---------------------------------------------------------------------
 
