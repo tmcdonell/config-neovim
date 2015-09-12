@@ -313,6 +313,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("hsImportKeyword", s:orange, "", "")
   call <SID>X("hsKeyword", s:blue, "", "")
   call <SID>X("hsIdentifier", s:blue, "", "")
+  call <SID>X("hsConditional", s:orange, "", "")
 
   " Delete Functions
   delf <SID>X
