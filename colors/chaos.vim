@@ -4,27 +4,40 @@
 " Maintainer: Trevor McDonell <trevor.mcdonell@gmail.com>
 "
 
+if &background == "light"
+  let s:foreground = "4d4d4d"     " grey24
+  let s:background = "ffffff"     " white
+  let s:selection  = "d6d6d6"     " grey80
+  let s:line       = "efefef"
+  let s:comment    = "8e908c"
+  let s:red        = "c82829"
+  let s:orange     = "ffc125"     " goldenrod1
+  let s:yellow     = "eab700"
+  let s:green      = "718c00"
+  let s:aqua       = "3e999f"
+  let s:blue       = "4271ae"
+  let s:purple     = "8959a8"
+  let s:window     = "efefef"
+else
+  let s:foreground = "cccccc"
+  let s:background = "2d2d2d"
+  let s:selection  = "515151"
+  let s:line       = "393939"
+  let s:comment    = "999999"
+  let s:red        = "f2777a"
+  let s:orange     = "f99157"
+  let s:yellow     = "ffcc66"
+  let s:green      = "99cc99"
+  let s:aqua       = "66cccc"
+  let s:blue       = "6699cc"
+  let s:purple     = "cc99cc"
+  let s:window     = "4d5057"
+endif
 
 highlight clear
 syntax reset
 
 let colors_name = "chaos"
-
-" Default colours
-let s:foreground = "4d4d4d"     " grey24
-let s:background = "ffffff"     " white
-let s:selection  = "d6d6d6"     " grey80
-let s:line       = "efefef"
-let s:comment    = "8e908c"
-let s:red        = "c82829"
-let s:orange     = "ffc125"     " goldenrod1
-let s:yellow     = "eab700"
-let s:green      = "718c00"
-let s:aqua       = "3e999f"
-let s:blue       = "4271ae"
-let s:purple     = "8959a8"
-let s:window     = "efefef"
-let s:darkgrey   = "a9a9a9"
 
 
 if has("gui_running") || &t_Co == 88 || &t_Co == 256
@@ -245,7 +258,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   " ================
 
   call <SID>X("Normal", s:foreground, s:background, "")
-  call <SID>X("LineNr", s:darkgrey, s:line, "")
+  call <SID>X("LineNr", s:selection, s:line, "")
   call <SID>X("NonText", s:selection, "", "")
   call <SID>X("SpecialKey", s:selection, "", "")
   call <SID>X("Search", s:foreground, s:yellow, "")
