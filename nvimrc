@@ -106,7 +106,7 @@ augroup END
 set background=light
 colorscheme chaos
 
-" Matches iTerm2 Colors (?)
+" Matches iTerm2 colours (?)
 let g:terminal_color_0  = '#808080'
 let g:terminal_color_1  = '#da4f56'
 let g:terminal_color_2  = '#78af54'
@@ -321,74 +321,78 @@ nnoremap <leader>wj     <C-w><C-j>
 
 "-- Terminal Mode / neoterm --------------------------------------------
 
-" Open neoterm windows in a vertical split
-let g:neoterm_position = 'vertical'
+if has('nvim')
 
-" Leader + Esc = exit terminal mode
-tnoremap <Leader><Esc> <C-\><C-n>
+  " Open neoterm windows in a vertical split
+  let g:neoterm_position = 'vertical'
 
-" Ctrl + w + n = create new window with empty buffer
-tnoremap <C-w>n     <C-\><C-n><C-w>n
-tnoremap <C-w><C-n> <C-\><C-n><C-w><C-n>
+  " Leader + Esc = exit terminal mode
+  tnoremap <Leader><Esc> <C-\><C-n>
 
-" Ctrl + w + s = split window horizontally
-tnoremap <C-w>s     <C-\><C-n><C-w>s
-tnoremap <C-w><C-s> <C-\><C-n><C-w><C-s>
+  " Ctrl + w + n = create new window with empty buffer
+  tnoremap <C-w>n     <C-\><C-n><C-w>n
+  tnoremap <C-w><C-n> <C-\><C-n><C-w><C-n>
 
-" Ctrl + w + v = split window vertically
-tnoremap <C-w>v     <C-\><C-n><C-w>v
-tnoremap <C-w><C-v> <C-\><C-n><C-w><C-v>
+  " Ctrl + w + s = split window horizontally
+  tnoremap <C-w>s     <C-\><C-n><C-w>s
+  tnoremap <C-w><C-s> <C-\><C-n><C-w><C-s>
 
-" Ctrl + w + p = move cursor to the previous window
-tnoremap <C-w>p     <C-\><C-n><C-w>p
-tnoremap <C-w><C-p> <C-\><C-n><C-w><C-p>
+  " Ctrl + w + v = split window vertically
+  tnoremap <C-w>v     <C-\><C-n><C-w>v
+  tnoremap <C-w><C-v> <C-\><C-n><C-w><C-v>
 
-" Ctrl + w + w = move cursor to window below/right of the current one
-tnoremap <C-w>w     <C-\><C-n><C-w>w
-tnoremap <C-w><C-w> <C-\><C-n><C-w><C-w>
+  " Ctrl + w + p = move cursor to the previous window
+  tnoremap <C-w>p     <C-\><C-n><C-w>p
+  tnoremap <C-w><C-p> <C-\><C-n><C-w><C-p>
 
-" Ctrl + w + u = move cursor to window above/left of the current one
-nnoremap <C-w>u     <C-w>w
-nnoremap <C-w><C-u> <C-w><C-w>
-tnoremap <C-w>u     <C-\><C-n><C-w>w
-tnoremap <C-w><C-u> <C-\><C-n><C-w><C-w>
+  " Ctrl + w + w = move cursor to window below/right of the current one
+  tnoremap <C-w>w     <C-\><C-n><C-w>w
+  tnoremap <C-w><C-w> <C-\><C-n><C-w><C-w>
 
-" Ctrl + w + h = move cursor to window on the left
-tnoremap <C-w>h     <C-\><C-n><C-w>h
-tnoremap <C-w><C-h> <C-\><C-n><C-w><C-h>
+  " Ctrl + w + u = move cursor to window above/left of the current one
+  nnoremap <C-w>u     <C-w>w
+  nnoremap <C-w><C-u> <C-w><C-w>
+  tnoremap <C-w>u     <C-\><C-n><C-w>w
+  tnoremap <C-w><C-u> <C-\><C-n><C-w><C-w>
 
-" Ctrl + w + j = move cursor to window below
-tnoremap <C-w>j     <C-\><C-n><C-w>j
-tnoremap <C-w><C-j> <C-\><C-n><C-w><C-j>
+  " Ctrl + w + h = move cursor to window on the left
+  tnoremap <C-w>h     <C-\><C-n><C-w>h
+  tnoremap <C-w><C-h> <C-\><C-n><C-w><C-h>
 
-" Ctrl + w + k = move cursor to window above
-tnoremap <C-w>k     <C-\><C-n><C-w>k
-tnoremap <C-w><C-k> <C-\><C-n><C-w><C-k>
+  " Ctrl + w + j = move cursor to window below
+  tnoremap <C-w>j     <C-\><C-n><C-w>j
+  tnoremap <C-w><C-j> <C-\><C-n><C-w><C-j>
 
-" Ctrl + w + l = move cursor to window on the right
-tnoremap <C-w>l     <C-\><C-n><C-w>l
-tnoremap <C-w><C-l> <C-\><C-n><C-w><C-l>
+  " Ctrl + w + k = move cursor to window above
+  tnoremap <C-w>k     <C-\><C-n><C-w>k
+  tnoremap <C-w><C-k> <C-\><C-n><C-w><C-k>
 
-" Ctrl + w + c = close current window
-tnoremap <C-w>c <C-\><C-n><C-w>c
+  " Ctrl + w + l = move cursor to window on the right
+  tnoremap <C-w>l     <C-\><C-n><C-w>l
+  tnoremap <C-w><C-l> <C-\><C-n><C-w><C-l>
 
-augroup Terminal
-  autocmd!
+  " Ctrl + w + c = close current window
+  tnoremap <C-w>c <C-\><C-n><C-w>c
 
-  " Always start insert mode when you enter a terminal window
-  autocmd BufWinEnter,WinEnter term://* startinsert
+  augroup Terminal
+    autocmd!
 
-  " Always stop insert mode when you leave a terminal window
-  autocmd BufLeave term://* stopinsert
-augroup END
+    " Always start insert mode when you enter a terminal window
+    autocmd BufWinEnter,WinEnter term://* startinsert
 
-augroup neoterm_setup
-  " Turn off spell checking in the terminal window
-  autocmd TermOpen term://*NEOTERM setlocal nospell
+    " Always stop insert mode when you leave a terminal window
+    autocmd BufLeave term://* stopinsert
+  augroup END
 
-  " Start the terminal in insert mode
-  autocmd TermOpen term://*NEOTERM startinsert
-augroup END
+  augroup neoterm_setup
+    " Turn off spell checking in the terminal window
+    autocmd TermOpen term://*NEOTERM setlocal nospell
+
+    " Start the terminal in insert mode
+    autocmd TermOpen term://*NEOTERM startinsert
+  augroup END
+
+endif
 
 
 " -- GUndo ---------------------------------------------------------------------
