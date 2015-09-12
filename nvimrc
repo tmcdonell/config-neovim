@@ -1,12 +1,4 @@
 
-"-- Critical -------------------------------------------------------------------
-
-" Teach a vim to fish
-if &shell =~# 'fish$'
-    set shell=bash
-endif
-
-
 "-- Plugins --------------------------------------------------------------------
 
 " Use Plug (junegunn/vim-plug) to manage plugins. Due to the structure of that
