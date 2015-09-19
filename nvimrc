@@ -582,11 +582,15 @@ augroup Haskell
   autocmd FileType haskell setlocal includeexpr=substitute(v:fname,'\\.','/','g').'.hs'
 
   " Sort then align imports, including as and hiding keywords
-  " Note that this only sorts the current block (inner paragraph)
+  "
+  " This only operates on the current block (inner paragraph)
+  "
+  " The sorting step must occur last, because after sorting the cursor may be
+  " within a comment area, and the following :Tabularize commands will fail.
   autocmd FileType haskell nnoremap <silent> <Leader>ai
+    \ <Bar> :Tabularize /\u.*/<CR>
+    \ <Bar> :Tabularize /\u\(\w\\|\.\)*\(\s*\\|$\)\zs.*/<CR>
     \ vip :sort r /\u.*/<CR>
-    \ <Bar> :Tabularize /^import qualified\>\\|^import\>\\|^$<CR>
-    \ <Bar> :Tabularize /\<as\>\(.\)*$\\|\<hiding\>\(.\)*$\\|^import\s\+\(qualified\s\)*\(\w\|\.\)*$\\|^$<CR>
 
   " ghc-mod
   autocmd FileType haskell nnoremap <silent> <LocalLeader>t :GhcModType<CR>
