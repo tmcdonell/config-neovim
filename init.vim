@@ -4,7 +4,7 @@
 " Use Plug (junegunn/vim-plug) to manage plugins. Due to the structure of that
 " git repository it needs to be stored directly in autoload, not the bundle
 " directory. It can, however, update itself.
-call plug#begin('~/.nvim/plug')
+call plug#begin('~/.config/nvim/plug')
 
 " A minimalist vim plugin manager (disabled: cannot bootstrap)
 " Plug 'junegunn/vim-plug'
@@ -13,19 +13,20 @@ call plug#begin('~/.nvim/plug')
 Plug 'benekastah/neomake'
 
 " Lean & mean status/tabline for vim that's light as air
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " teach a vim to fish
 Plug 'dag/vim-fish'
-
-" vimscripts for haskell development
-Plug 'dag/vim2hs'
 
 " Fast vim CtrlP matcher based on python
 Plug 'FelikZ/ctrlp-py-matcher'
 
 " Configurable, flexible, intuitive text aligning
 Plug 'godlygeek/tabular'
+
+" vimscripts for haskell development
+Plug 'dag/vim2hs'
 
 " Improved incremental (and fuzzy) searching for vim
 Plug 'haya14busa/incsearch.vim'
@@ -59,11 +60,30 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 
 " Happy Haskell programming on Vim, powered by ghc-mod
-Plug 'eagletmt/ghcmod-vim'
+" Plug 'eagletmt/ghcmod-vim'
+Plug 'eagletmt/neco-ghc'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+
+" Dark powered asynchronous completion framework for neovim (requires python3)
+Plug 'Shougo/deoplete.nvim'
 
 " Syntax checking hacks for vim (requires +lua)
 " Plug 'scrooloose/syntastic'
+
+" Automatic resizing of Vim windows to the golden ratio
+" Plug 'roman/golden-ratio'
+
+" LLVM syntax
+Plug 'Superbil/llvm.vim'
+
+" A vim plugin for vim plugins
+Plug 'tpope/vim-scriptease'
+
+" Highlight trailing whitespace
+Plug 'bronson/vim-trailing-whitespace'
+
+" Man page viewer
+Plug 'nhooyr/neoman.vim'
 
 call plug#end()
 
@@ -80,7 +100,7 @@ let maplocalleader = ";"
 "-- nvimrc ---------------------------------------------------------------------
 
 " Location of nvimrc
-let g:nvimrc = "~/.config/nvim/nvimrc"
+let g:nvimrc = "~/.config/nvim/init.vim"
 
 " Edit nvimrc
 nnoremap <Leader>m :exec ":e " . g:nvimrc<CR>
@@ -95,8 +115,8 @@ augroup END
 " -- Colours -------------------------------------------------------------------
 
 " The background colour brightness
-set background=light
 colorscheme chaos
+set background=light
 
 " Matches iTerm2 colours (?)
 let g:terminal_color_0  = '#808080'
@@ -155,15 +175,6 @@ autocmd BufReadPost *
     \   | execute "normal g'\"" |
     \ endif
 
-" Display trailing whitespace on a line in red, except in insert mode
-hi ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
 " (buffer id) + Leader = jump to buffer
 let buffer_id = 1
 while buffer_id <= 99
@@ -196,7 +207,7 @@ set scrolljump=5
 set nowrap
 
 " don't redraw while executing macros
-" set lazyredraw
+set lazyredraw
 
 " show the (relative) line number for each line
 set number
@@ -225,7 +236,7 @@ set hidden
 
 " split new windows to the right or below of the current one
 set splitright
-set splitbelow
+set nosplitbelow
 
 " list of flags specifying which commands to wrap to another line
 set whichwrap=b,s,h,l,<,>,~,[,]
@@ -316,6 +327,9 @@ nnoremap <leader>wh     <C-w><C-h>
 nnoremap <leader>wk     <C-w><C-k>
 nnoremap <leader>wj     <C-w><C-j>
 
+" distribute windows
+nnoremap <leader>w=     <C-w>=
+
 
 "-- Terminal Mode / neoterm --------------------------------------------
 
@@ -380,14 +394,14 @@ if has('nvim')
 
     " Always stop insert mode when you leave a terminal window
     autocmd BufLeave term://* stopinsert
-  augroup END
+  " augroup END
 
-  augroup neoterm_setup
+  " augroup neoterm_setup
     " Turn off spell checking in the terminal window
-    autocmd TermOpen term://*NEOTERM setlocal nospell
+    autocmd TermOpen term://* setlocal nospell
 
     " Start the terminal in insert mode
-    autocmd TermOpen term://*NEOTERM startinsert
+    autocmd TermOpen term://* startinsert
   augroup END
 
 endif
@@ -479,8 +493,10 @@ map z/  <Plug>(incsearch-fuzzyspell-/)
 map z?  <Plug>(incsearch-fuzzyspell-?)
 map zg/ <Plug>(incsearch-fuzzyspell-stay)
 
-" turn off highlighting
+" turn off highlighting using <CR>, but not in the quickfix window
 nnoremap <CR> :nohlsearch<CR>
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+autocmd BufReadPost quickfix setlocal nospell
 
 
 "-- Neomake --------------------------------------------------------------------
@@ -516,7 +532,7 @@ if !exists('g:nvimrc_neomake')
   call neomake#signs#RedefineWarningSign({ 'texthl': 'SpellCap' })
 endif
 
-let g:neomake_haskell_enabled_makers  = ['ghcmod']
+let g:neomake_haskell_enabled_makers  = [] " ['ghcmod']
 
 let g:neomake_haskell_ghcmod_maker = {
     \ 'exe': 'ghc-mod',
@@ -575,8 +591,8 @@ augroup Haskell
 
   autocmd BufNewFile,BufRead *.maxml set syntax=haskell " MaxML
 
-  autocmd FileType haskell setlocal shiftwidth=2
-  autocmd FileType haskell setlocal iskeyword+='
+  " autocmd FileType haskell setlocal shiftwidth=2
+  " autocmd FileType haskell setlocal iskeyword=@,48-57,_,'
   autocmd FileType haskell setlocal path=src,,
   autocmd FileType haskell setlocal include=^import\\s*\\(qualified\\)\\?\\s*
   autocmd FileType haskell setlocal includeexpr=substitute(v:fname,'\\.','/','g').'.hs'
@@ -587,10 +603,11 @@ augroup Haskell
   "
   " The sorting step must occur last, because after sorting the cursor may be
   " within a comment area, and the following :Tabularize commands will fail.
-  autocmd FileType haskell nnoremap <silent> <Leader>ai
-    \ <Bar> :Tabularize /\u.*/<CR>
-    \ <Bar> :Tabularize /\u\(\w\\|\.\)*\(\s*\\|$\)\zs.*/<CR>
-    \ vip :sort r /\u.*/<CR>
+  " autocmd FileType haskell nnoremap <silent> <Leader>ai
+  "   \ <Bar> :Tabularize /\u.*/<CR>
+  "   \ <Bar> :Tabularize /\u\(\w\\|\.\)*\(\s*\\|$\)\zs.*/<CR>
+  "   \ vip :sort r /\u.*/<CR>
+  autocmd FileTYpe haskell nnoremap <silent> <Leader>ai :Tabularize haskell_imports<CR>
 
   " ghc-mod
   autocmd FileType haskell nnoremap <silent> <LocalLeader>t :GhcModType<CR>
@@ -598,6 +615,9 @@ augroup Haskell
   autocmd FileType haskell nnoremap <silent> <LocalLeader>i :GhcModTypeInsert<CR>
   autocmd FileType haskell nnoremap <silent> <LocalLeader>c :GhcModSplitFunCase<CR>
   autocmd FileType haskell nnoremap <silent> <LocalLeader>d :GhcModSigCodegen<CR>
+
+  let g:haskellmode_completion_ghc=0
+  autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
   " ghci
   autocmd FileType haskell nnoremap <silent> <LocalLeader>q :T :q<CR>:T ./cabal quick "%"<CR>
@@ -612,6 +632,18 @@ augroup Haskell
   "
   " don't conceal haskell syntax
   let g:haskell_conceal=0
+  let g:haskell_jmacro=0
+  let g:haskell_shqq=0
+  let g:haskell_rlangqq=0
+  let g:haskell_sql=0
+  let g:haskell_json=0
+  let g:haskell_xml=0
+  let g:haskell_hsp=0
 
 augroup END
+
+
+"-- Deoplete -------------------------------------------------------------------
+
+let g:deoplete#enable_at_startup = 1
 
