@@ -18,6 +18,7 @@ if &background == "light"
   let s:blue       = "4271ae"
   let s:purple     = "8959a8"
   let s:window     = "efefef"
+  let s:magenta    = "8b008b"
 else
   let s:foreground = "cccccc"
   let s:background = "2d2d2d"
@@ -283,10 +284,10 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     call <SID>X("PMenu", s:foreground, s:selection, "none")
     call <SID>X("PMenuSel", s:foreground, s:selection, "reverse")
     call <SID>X("SignColumn", "", s:background, "none")
-    call <SID>X("SpellBad", s:red, "", "undercurl")
-    call <SID>X("SpellCap", s:aqua, "", "undercurl")
-    call <SID>X("SpellLocal", s:aqua, "", "undercurl")
-    call <SID>X("SpellRare", s:purple, "", "undercurl")
+    call <SID>X("SpellBad", s:red, s:background, "undercurl")
+    call <SID>X("SpellCap", s:aqua, s:background, "undercurl")
+    call <SID>X("SpellLocal", s:aqua, s:background, "undercurl")
+    call <SID>X("SpellRare", s:purple, s:background, "undercurl")
   end
   if version >= 703
     call <SID>X("ColorColumn", "", s:line, "none")
@@ -294,7 +295,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 
   " Standard Highlighting
   call <SID>X("Comment", s:comment, "", "")
-  call <SID>X("Todo", s:comment, s:background, "")
+  call <SID>X("Todo", s:comment, s:background, "bold")
   call <SID>X("Title", s:comment, "", "")
   call <SID>X("Identifier", s:red, "", "none")
   call <SID>X("Statement", s:foreground, "", "")
@@ -325,8 +326,16 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("hsImport", s:orange, "", "")
   call <SID>X("hsImportKeyword", s:orange, "", "")
   call <SID>X("hsKeyword", s:blue, "", "")
-  call <SID>X("hsIdentifier", s:blue, "", "")
   call <SID>X("hsConditional", s:orange, "", "")
+  call <SID>X("hsStructure", s:blue, "", "")
+  call <SID>X("hsExprKeyword", s:orange, "", "")
+  call <SID>X("hsStatement", s:purple, "", "")
+  call <SID>X("hsIdentifier", s:foreground, "", "")
+  " call <SID>X("hsType", s:magenta, "", "")
+
+  call <SID>X("cabalIdentifier", s:blue, "", "")
+  call <SID>X("cabalStatement", s:orange, "", "")
+  call <SID>X("cabalConditional", s:orange, "", "")
 
   " Delete Functions
   delf <SID>X
