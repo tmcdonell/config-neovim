@@ -88,6 +88,9 @@ Plug 'bronson/vim-trailing-whitespace'
 " Man page viewer
 Plug 'nhooyr/neoman.vim'
 
+" Speed up vim by updating folds only when called for
+Plug 'Konfekt/FastFold'
+
 call plug#end()
 
 
@@ -217,7 +220,10 @@ set number
 set relativenumber
 
 " Disable folding
-set nofoldenable
+" set nofoldenable
+
+" Start with all folds open
+set foldlevelstart=99
 
 " ignore case when using a search pattern
 set ignorecase
@@ -596,6 +602,7 @@ augroup Haskell
 
   " autocmd FileType haskell setlocal shiftwidth=2
   " autocmd FileType haskell setlocal iskeyword=@,48-57,_,'
+  " autocmd FileType haskell setlocal foldcolumn=1
   autocmd FileType haskell setlocal path=src,,
   autocmd FileType haskell setlocal include=^import\\s*\\(qualified\\)\\?\\s*
   autocmd FileType haskell setlocal includeexpr=substitute(v:fname,'\\.','/','g').'.hs'
