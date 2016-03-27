@@ -294,7 +294,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   end
 
   " Standard Highlighting
-  call <SID>X("Comment", s:comment, "", "")
+  call <SID>X("Comment", s:comment, "", "italic")
   call <SID>X("Todo", s:comment, s:background, "bold")
   call <SID>X("Title", s:comment, "", "")
   call <SID>X("Identifier", s:red, "", "none")
