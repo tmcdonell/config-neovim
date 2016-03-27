@@ -215,6 +215,9 @@ set scrolljump=5
 " don't wrap long lines
 set nowrap
 
+" but if we do wrap, don't just break at the last character that fits on screen
+set linebreak
+
 " don't redraw while executing macros
 set lazyredraw
 
@@ -544,20 +547,20 @@ if !exists('g:nvimrc_neomake')
   call neomake#signs#RedefineWarningSign({ 'texthl': 'SpellCap' })
 endif
 
-let g:neomake_haskell_enabled_makers  = [] " ['ghcmod']
+" let g:neomake_haskell_enabled_makers  = [] " ['ghcmod']
 
-let g:neomake_haskell_ghcmod_maker = {
-    \ 'exe': 'ghc-mod',
-    \ 'args': ['check', "-b\n"],
-    \ 'errorformat':
-      \ '%-Z %#,' .
-      \ '%E%f:%l:%c:Error: %m,' .
-      \ '%W%f:%l:%c:Warning: %m,'.
-      \ '%E%f:%l:%c: Error: %m,' .
-      \ '%W%f:%l:%c: Warning: %m,' .
-      \ '%E%f:%l:%c:%m,' .
-      \ '%m'
-    \ }
+" let g:neomake_haskell_ghcmod_maker = {
+"     \ 'exe': 'ghc-mod',
+"     \ 'args': ['check', "-b\n"],
+"     \ 'errorformat':
+"       \ '%-Z %#,' .
+"       \ '%E%f:%l:%c:Error: %m,' .
+"       \ '%W%f:%l:%c:Warning: %m,'.
+"       \ '%E%f:%l:%c: Error: %m,' .
+"       \ '%W%f:%l:%c: Warning: %m,' .
+"       \ '%E%f:%l:%c:%m,' .
+"       \ '%m'
+"     \ }
 
 
 "-- VimL -----------------------------------------------------------------------
@@ -571,7 +574,7 @@ augroup END
 "-- Shell ----------------------------------------------------------------------
 
 " All shell scripts allow POSIX extensions, e.g $(..) instead of `..`
-let g:is_posix=1
+let g:is_posix = 1
 
 augroup Bash
   autocmd!
@@ -620,7 +623,7 @@ augroup Haskell
   "   \ <Bar> :Tabularize /\u.*/<CR>
   "   \ <Bar> :Tabularize /\u\(\w\\|\.\)*\(\s*\\|$\)\zs.*/<CR>
   "   \ vip :sort r /\u.*/<CR>
-  autocmd FileTYpe haskell nnoremap <silent> <Leader>ai :Tabularize haskell_imports<CR>
+  autocmd FileType haskell nnoremap <silent> <Leader>ai :Tabularize haskell_imports<CR>
 
   " ghc-mod
   autocmd FileType haskell nnoremap <silent> <LocalLeader>t :GhcModType<CR>
@@ -629,7 +632,8 @@ augroup Haskell
   autocmd FileType haskell nnoremap <silent> <LocalLeader>c :GhcModSplitFunCase<CR>
   autocmd FileType haskell nnoremap <silent> <LocalLeader>d :GhcModSigCodegen<CR>
 
-  let g:haskellmode_completion_ghc=0
+  let g:haskellmode_completion_ghc     = 0
+  let g:necoghc_enable_detailed_browse = 1
   autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
   " ghci
