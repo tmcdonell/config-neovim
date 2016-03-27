@@ -91,6 +91,9 @@ Plug 'nhooyr/neoman.vim'
 " Speed up vim by updating folds only when called for
 Plug 'Konfekt/FastFold'
 
+" The fancy start screen for Vim
+Plug 'mhinz/vim-startify'
+
 call plug#end()
 
 
@@ -656,4 +659,8 @@ augroup END
 "-- Deoplete -------------------------------------------------------------------
 
 let g:deoplete#enable_at_startup = 1
+
+"-- Startify -------------------------------------------------------------------
+
+nnoremap <leader>st :Startify<CR>
 
