@@ -456,6 +456,7 @@ nnoremap <silent> <Leader>r :CtrlPClearCache<CR>
 
 let g:ctrlp_root_markers = ['*.cabal']
 let g:ctrlp_match_func   = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_reuse_window = 'startify'
 
 
 "-- Fugitive -------------------------------------------------------------------
@@ -667,4 +668,7 @@ let g:deoplete#enable_at_startup = 1
 "-- Startify -------------------------------------------------------------------
 
 nnoremap <leader>st :Startify<CR>
+
+let g:startify_change_to_dir      = 1
+let g:startify_change_to_vcs_root = 1
 
