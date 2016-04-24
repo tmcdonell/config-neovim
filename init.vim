@@ -94,6 +94,12 @@ Plug 'Konfekt/FastFold'
 " The fancy start screen for Vim
 Plug 'mhinz/vim-startify'
 
+" Add quotes/parenthesis
+Plug 'tpope/vim-surround'
+
+" Repeat supported plugin maps with "."
+Plug 'tpope/vim-repeat'
+
 call plug#end()
 
 
