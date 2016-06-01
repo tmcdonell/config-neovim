@@ -218,6 +218,12 @@ set scrolloff=5
 " minimal number of lines to scroll at a time
 set scrolljump=5
 
+" minimal number of columns to scroll horizontally
+set sidescroll=1
+
+" minimal number of columns to show around the cursor
+set sidescrolloff=5
+
 " don't wrap long lines
 set nowrap
 
