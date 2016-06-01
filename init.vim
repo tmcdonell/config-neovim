@@ -101,6 +101,24 @@ Plug 'tpope/vim-surround'
 " Repeat supported plugin maps with "."
 Plug 'tpope/vim-repeat'
 
+" Live preview markdown files
+function! CargoBuild(info)
+  if a:info.status != 'unchanged' || a:info.force
+    !cargo build --release
+    UpdateRemotePlugins
+  endif
+endfunction
+
+Plug 'euclio/vim-markdown-composer', { 'do': function('CargoBuild') }
+  " NOTE: OpenSSL installed via Homebrew is not linked to the system paths by
+  " default, so to do the initial build you may need something like:
+  "
+  " > env C_INCLUDE_PATH=/usr/local/homebrew/opt/openssl/include cargo build -release
+  "
+
+" Markdown mode (requires gadlygeek/tabular)
+Plug 'plasticboy/vim-markdown'
+
 call plug#end()
 
 
@@ -544,7 +562,7 @@ function! s:NeomakeExclude()
   endif
 endfunction
 
-augroup Neomake
+augroup neomake
   autocmd!
   autocmd BufWritePost * call s:NeomakeExclude()
 augroup END
@@ -579,7 +597,7 @@ endif
 
 "-- VimL -----------------------------------------------------------------------
 
-augroup VimL
+augroup viml
   autocmd!
   autocmd FileType vim setlocal shiftwidth=2
 augroup END
@@ -590,7 +608,7 @@ augroup END
 " All shell scripts allow POSIX extensions, e.g $(..) instead of `..`
 let g:is_posix = 1
 
-augroup Bash
+augroup bash
   autocmd!
   autocmd FileType sh setlocal shiftwidth=2
 augroup END
@@ -615,7 +633,7 @@ augroup END
 
 "-- Haskell --------------------------------------------------------------------
 
-augroup Haskell
+augroup haskell
   autocmd!
 
   autocmd BufNewFile,BufRead *.maxml set syntax=haskell " MaxML
@@ -678,6 +696,16 @@ augroup Haskell
 
 augroup END
 
+"-- Markdown -------------------------------------------------------------------
+
+augroup markdown
+  " autocmd FileType markdown setl shell=bash\ -i
+
+  let g:vim_markdown_toc_autofit          = 1
+  let g:vim_markdown_new_list_item_indent = 2
+
+  autocmd FileType markdown setlocal conceallevel=2
+augroup END
 
 "-- Deoplete -------------------------------------------------------------------
 
