@@ -27,6 +27,7 @@ Plug 'godlygeek/tabular'
 
 " vimscripts for haskell development
 Plug 'dag/vim2hs'
+" Plug 'neovimhaskell/haskell-vim'
 
 " Improved incremental (and fuzzy) searching for vim
 Plug 'haya14busa/incsearch.vim'
@@ -560,7 +561,7 @@ if !exists('g:nvimrc_neomake')
   call neomake#signs#RedefineWarningSign({ 'texthl': 'SpellCap' })
 endif
 
-" let g:neomake_haskell_enabled_makers  = [] " ['ghcmod']
+" let g:neomake_haskell_enabled_makers  = ['ghcmod']
 
 " let g:neomake_haskell_ghcmod_maker = {
 "     \ 'exe': 'ghc-mod',
@@ -646,7 +647,7 @@ augroup Haskell
   autocmd FileType haskell nnoremap <silent> <LocalLeader>d :GhcModSigCodegen<CR>
 
   let g:haskellmode_completion_ghc     = 0
-  let g:necoghc_enable_detailed_browse = 1
+  let g:necoghc_enable_detailed_browse = 0
   autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
   " ghci
@@ -658,10 +659,9 @@ augroup Haskell
   autocmd FileType haskell nnoremap <silent> <LocalLeader>e :TREPLSend<CR>
   autocmd FileType haskell vnoremap <silent> <LocalLeader>e :TREPLSend<CR>
 
-  "-- vim2hs ---------------------------------------------------------------------
+  "-- dag/vim2hs ---------------------------------------------------------------
   "
-  " don't conceal haskell syntax
-  let g:haskell_conceal=0
+  let g:haskell_conceal=0 " don't conceal haskell syntax
   let g:haskell_jmacro=0
   let g:haskell_shqq=0
   let g:haskell_rlangqq=0
@@ -669,6 +669,12 @@ augroup Haskell
   let g:haskell_json=0
   let g:haskell_xml=0
   let g:haskell_hsp=0
+
+  " neovimhaskell/haskell-vim --------------------------------------------------
+  let g:haskell_indent_in=0
+  let g:haskell_enable_typeroles=1
+  let g:haskell_enable_pattern_synonyms=1
+  " let g:haskell_classic_highlighting=1
 
 augroup END
 
