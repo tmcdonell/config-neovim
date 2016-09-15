@@ -206,6 +206,9 @@ set spelllang=en_au
 
 " -- Buffers & Entering text ---------------------------------------------------
 
+" Allow the cursor to change shape for insert vs. normal mode.
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
 " Jump to the last known cursor position
 autocmd BufReadPost *
     \ if line("'\'") > 0 && line("'\'") <= line("$")
