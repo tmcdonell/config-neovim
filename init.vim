@@ -25,10 +25,6 @@ Plug 'FelikZ/ctrlp-py-matcher'
 " Configurable, flexible, intuitive text aligning
 Plug 'godlygeek/tabular'
 
-" vimscripts for haskell development
-Plug 'dag/vim2hs'
-" Plug 'neovimhaskell/haskell-vim'
-
 " Improved incremental (and fuzzy) searching for vim
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
@@ -63,10 +59,17 @@ Plug 'tpope/vim-unimpaired'
 " Combine with NETRW to create a delicious salad dressing
 Plug 'tpope/vim-vinegar'
 
+" vimscripts for haskell development
+Plug 'dag/vim2hs'
+" Plug 'neovimhaskell/haskell-vim'
+
 " Happy Haskell programming on Vim, powered by ghc-mod
 " Plug 'eagletmt/ghcmod-vim'
 Plug 'eagletmt/neco-ghc'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+
+" Quickfix error feedback via ghcid
+Plug 'cloudhead/neovim-ghcid'
 
 " Dark powered asynchronous completion framework for neovim (requires python3)
 Plug 'Shougo/deoplete.nvim'
@@ -639,7 +642,7 @@ augroup END
 
 "-- Haskell --------------------------------------------------------------------
 
-augroup haskell
+augroup Haskell
   autocmd!
 
   autocmd BufNewFile,BufRead *.maxml set syntax=haskell " MaxML
