@@ -148,6 +148,9 @@ augroup END
 
 " -- Colours -------------------------------------------------------------------
 
+" Enable 24-bit colour mode
+set termguicolors
+
 " The background colour brightness
 colorscheme chaos
 set background=light
