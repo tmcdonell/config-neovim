@@ -13,6 +13,7 @@ if &background == "light"
   let s:red        = "c82829"
   let s:orange     = "ffc125"     " goldenrod1
   let s:yellow     = "eab700"
+  let s:search     = s:yellow
   let s:green      = "718c00"
   let s:aqua       = "3e999f"
   let s:blue       = "4271ae"
@@ -28,6 +29,7 @@ else
   let s:red        = "f2777a"
   let s:orange     = "f99157"
   let s:yellow     = "ffcc66"
+  let s:search     = "8b118b"
   let s:green      = "99cc99"
   let s:aqua       = "66cccc"
   let s:blue       = "6699cc"
@@ -262,7 +264,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("LineNr", s:selection, s:line, "")
   call <SID>X("NonText", s:selection, "", "")
   call <SID>X("SpecialKey", s:selection, "", "")
-  call <SID>X("Search", s:foreground, s:yellow, "")
+  call <SID>X("Search", s:foreground, s:search, "")
   call <SID>X("IncSearch", "", "", "reverse")
   call <SID>X("TabLine", s:window, s:foreground, "reverse")
   call <SID>X("TabLineFill", s:window, s:foreground, "reverse")
