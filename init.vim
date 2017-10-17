@@ -10,7 +10,10 @@ call plug#begin('~/.config/nvim/plug')
 " Plug 'junegunn/vim-plug'
 
 " A plugin for asynchronous :make using Neovim's job-control functionality
-Plug 'benekastah/neomake'
+Plug 'neomake/neomake'
+
+" tmux status line generator
+" Plug 'edkolev/tmuxline.vim'
 
 " Lean & mean status/tabline for vim that's light as air
 Plug 'vim-airline/vim-airline'
@@ -36,7 +39,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'kassio/neoterm'
 
 " Fuzzy file, buffer, mru, tag, etc finder
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " Delete buffers and close files in Vim without messing up your layout.
 Plug 'moll/vim-bbye'
@@ -65,8 +68,11 @@ Plug 'dag/vim2hs'
 
 " Happy Haskell programming on Vim, powered by ghc-mod
 " Plug 'eagletmt/ghcmod-vim'
-Plug 'eagletmt/neco-ghc'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+" Plug 'eagletmt/neco-ghc'
+" Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+
+" Intero for neovim
+Plug 'parsonsmatt/intero-neovim'
 
 " Quickfix error feedback via ghcid
 Plug 'cloudhead/neovim-ghcid'
@@ -87,13 +93,14 @@ Plug 'Superbil/llvm.vim'
 Plug 'tpope/vim-scriptease'
 
 " Highlight trailing whitespace
-Plug 'bronson/vim-trailing-whitespace'
+" Plug 'bronson/vim-trailing-whitespace'
+Plug 'ntpeters/vim-better-whitespace'
 
 " Man page viewer
 Plug 'nhooyr/neoman.vim'
 
 " Speed up vim by updating folds only when called for
-Plug 'Konfekt/FastFold'
+" Plug 'Konfekt/FastFold'
 
 " The fancy start screen for Vim
 Plug 'mhinz/vim-startify'
@@ -107,20 +114,29 @@ Plug 'tpope/vim-repeat'
 " Live preview markdown files
 function! CargoBuild(info)
   if a:info.status != 'unchanged' || a:info.force
-    !cargo build --release
+    !env C_INCLUDE_PATH=/usr/local/homebrew/opt/openssl/include cargo build --release
     UpdateRemotePlugins
   endif
 endfunction
 
-Plug 'euclio/vim-markdown-composer', { 'do': function('CargoBuild') }
+" Plug 'euclio/vim-markdown-composer', { 'do': function('CargoBuild') }
   " NOTE: OpenSSL installed via Homebrew is not linked to the system paths by
   " default, so to do the initial build you may need something like:
   "
-  " > env C_INCLUDE_PATH=/usr/local/homebrew/opt/openssl/include cargo build -release
+  " > env C_INCLUDE_PATH=/usr/local/homebrew/opt/openssl/include cargo build --release
   "
 
 " Markdown mode (requires gadlygeek/tabular)
 Plug 'plasticboy/vim-markdown'
+
+" The missing motion for vim
+" Plug 'justinmk/vim-sneak'
+
+" Fuzzy command-line finder
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Support for using neovim as a remote process
+Plug 'mhinz/neovim-remote'
 
 call plug#end()
 
@@ -186,6 +202,7 @@ let g:airline#extensions#tabline#fnamecollapse  = 0
 let g:airline#extensions#tabline#formatter      = 'unique_tail_improved'
 let g:airline#extensions#tabline#fnamemod       = ':t'
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tmuxline#enabled       = 0
 
 
 " -- Highlighting --------------------------------------------------------------
@@ -208,9 +225,6 @@ set spelllang=en_au
 
 
 " -- Buffers & Entering text ---------------------------------------------------
-
-" Allow the cursor to change shape for insert vs. normal mode.
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " Jump to the last known cursor position
 autocmd BufReadPost *
@@ -390,6 +404,8 @@ nnoremap <leader>w=     <C-w>=
 
 if has('nvim')
 
+  let $EDITOR = 'nvr -l'
+
   " Open neoterm windows in a vertical split
   let g:neoterm_position = 'vertical'
 
@@ -494,9 +510,11 @@ nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 " Leader + r = clean file cache
 nnoremap <silent> <Leader>r :CtrlPClearCache<CR>
 
-let g:ctrlp_root_markers = ['*.cabal']
+let g:ctrlp_root_markers = ['stack*.yaml'] " '*.cabal',
 let g:ctrlp_match_func   = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_reuse_window = 'startify'
+let g:ctrlp_switch_buffer = ''
+let g:ctrlp_custom_ignore = 'tests/*'
 
 
 "-- Fugitive -------------------------------------------------------------------
@@ -645,7 +663,8 @@ augroup END
 augroup Haskell
   autocmd!
 
-  autocmd BufNewFile,BufRead *.maxml set syntax=haskell " MaxML
+  autocmd BufNewFile,BufRead *.chs   set filetype=haskell " c2hs
+  autocmd BufNewFile,BufRead *.maxml set filetype=haskell " MaxML
 
   " autocmd FileType haskell setlocal shiftwidth=2
   " autocmd FileType haskell setlocal iskeyword=@,48-57,_,'
@@ -667,14 +686,14 @@ augroup Haskell
   autocmd FileType haskell nnoremap <silent> <Leader>ai :Tabularize haskell_imports<CR>
 
   " ghc-mod
-  autocmd FileType haskell nnoremap <silent> <LocalLeader>t :GhcModType<CR>
-  autocmd FileType haskell nnoremap <silent> <LocalLeader>T :GhcModTypeClear<CR>
-  autocmd FileType haskell nnoremap <silent> <LocalLeader>i :GhcModTypeInsert<CR>
-  autocmd FileType haskell nnoremap <silent> <LocalLeader>c :GhcModSplitFunCase<CR>
-  autocmd FileType haskell nnoremap <silent> <LocalLeader>d :GhcModSigCodegen<CR>
+  " autocmd FileType haskell nnoremap <silent> <LocalLeader>t :GhcModType<CR>
+  " autocmd FileType haskell nnoremap <silent> <LocalLeader>T :GhcModTypeClear<CR>
+  " autocmd FileType haskell nnoremap <silent> <LocalLeader>i :GhcModTypeInsert<CR>
+  " autocmd FileType haskell nnoremap <silent> <LocalLeader>c :GhcModSplitFunCase<CR>
+  " autocmd FileType haskell nnoremap <silent> <LocalLeader>d :GhcModSigCodegen<CR>
 
   let g:haskellmode_completion_ghc     = 0
-  let g:necoghc_enable_detailed_browse = 0
+  let g:necoghc_enable_detailed_browse = 1
   autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
   " ghci
@@ -704,6 +723,51 @@ augroup Haskell
   " let g:haskell_classic_highlighting=1
 
 augroup END
+
+
+"-- Intero ---------------------------------------------------------------------
+
+augroup interoMaps
+  au!
+  " Maps for intero. Restrict to Haskell buffers so the bindings don't collide.
+
+  " Background process and window management
+  au FileType haskell nnoremap <silent> <leader>is :InteroStart<CR>
+  au FileType haskell nnoremap <silent> <leader>ik :InteroKill<CR>
+
+  " Open intero/GHCi split horizontally
+  au FileType haskell nnoremap <silent> <leader>io :InteroOpen<CR>
+  " Open intero/GHCi split vertically
+  au FileType haskell nnoremap <silent> <leader>iov :InteroOpen<CR><C-W>H
+  au FileType haskell nnoremap <silent> <leader>ih :InteroHide<CR>
+
+  " Reloading (pick one)
+  " Automatically reload on save
+  " au BufWritePost *.hs InteroReload
+  " Manually save and reload
+  au FileType haskell nnoremap <silent> <leader>wr :w \| :InteroReload<CR>
+
+  " Load individual modules
+  au FileType haskell nnoremap <silent> <leader>il :InteroLoadCurrentModule<CR>
+  au FileType haskell nnoremap <silent> <leader>if :InteroLoadCurrentFile<CR>
+
+  " Type-related information
+  " Heads up! These next two differ from the rest.
+  au FileType haskell map <silent> <leader>it <Plug>InteroGenericType
+  au FileType haskell map <silent> <leader>iT <Plug>InteroType
+  au FileType haskell nnoremap <silent> <leader>iit :InteroTypeInsert<CR>
+
+  " Navigation
+  au FileType haskell nnoremap <silent> <leader>jd :InteroGoToDef<CR>
+
+  " Managing targets
+  " Prompts you to enter targets (no silent):
+  au FileType haskell nnoremap <leader>ist :InteroSetTargets<SPACE>
+augroup END
+
+" Intero starts automatically. Set this if you'd like to prevent that.
+let g:intero_start_immediately = 0
+
 
 "-- Markdown -------------------------------------------------------------------
 

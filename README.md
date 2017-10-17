@@ -5,9 +5,5 @@ Settings for NeoVim
 
 http://neovim.io
 
-Clone the repository to `~/.config/nvim` and create the symlinks:
+To install, clone the repository to `~/.config/nvim`.
 
-```
-$ ln -s ~/.config/nvim        ~/.nvim
-$ ln -s ~/.config/nvim/nvimrc ~/.nvimrc
-```
