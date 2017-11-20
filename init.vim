@@ -558,9 +558,9 @@ nnoremap <silent> gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
 " -- Searching -----------------------------------------------------------------
 
 " standard incremental search
-" map /   <Plug>(incsearch-forward)
-" map ?   <Plug>(incsearch-backward)
-" map g/  <Plug>(incsearch-stap)
+map /   <Plug>(incsearch-forward)
+map ?   <Plug>(incsearch-backward)
+map g/  <Plug>(incsearch-stay)
 
 " fuzzy search
 map z/  <Plug>(incsearch-fuzzyspell-/)
