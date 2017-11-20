@@ -168,6 +168,25 @@ augroup nvimrc
 augroup END
 
 
+" -- Highlighting --------------------------------------------------------------
+
+" type of file; triggers the FileType event when set (local to buffer)
+filetype plugin indent on
+
+" name of syntax highlighting used (local to buffer)
+syntax on
+
+" highlight all matches for the last used search pattern
+set hlsearch
+
+" highlight the screen line of the cursor (local to window)
+set cursorline
+
+" spell highlight spelling mistakes, list of accepted languages
+set spell
+set spelllang=en_au
+
+
 " -- Colours -------------------------------------------------------------------
 
 " Enable 24-bit colour mode
@@ -175,9 +194,8 @@ set termguicolors
 
 " The background colour brightness
 colorscheme chaos
-set background=light
 
-" Matches iTerm2 colours (?)
+" Matches iTerm2 colours (???)
 let g:terminal_color_0  = '#808080'
 let g:terminal_color_1  = '#da4f56'
 let g:terminal_color_2  = '#78af54'
@@ -206,25 +224,6 @@ let g:airline#extensions#tabline#formatter      = 'unique_tail_improved'
 let g:airline#extensions#tabline#fnamemod       = ':t'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tmuxline#enabled       = 0
-
-
-" -- Highlighting --------------------------------------------------------------
-
-" type of file; triggers the FileType event when set (local to buffer)
-filetype plugin indent on
-
-" name of syntax highlighting used (local to buffer)
-syntax on
-
-" highlight all matches for the last used search pattern
-set hlsearch
-
-" highlight the screen line of the cursor (local to window)
-set cursorline
-
-" spell highlight spelling mistakes, list of accepted languages
-set spell
-set spelllang=en_au
 
 
 " -- Buffers & Entering text ---------------------------------------------------
