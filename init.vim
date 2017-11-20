@@ -138,6 +138,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Support for using neovim as a remote process
 Plug 'mhinz/neovim-remote'
 
+" Visually display indent level of code
+Plug 'nathanaelkane/vim-indent-guides'
+
 call plug#end()
 
 
