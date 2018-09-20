@@ -97,7 +97,7 @@ Plug 'tpope/vim-scriptease'
 Plug 'ntpeters/vim-better-whitespace'
 
 " Man page viewer
-Plug 'nhooyr/neoman.vim'
+" Plug 'nhooyr/neoman.vim'
 
 " Speed up vim by updating folds only when called for
 " Plug 'Konfekt/FastFold'
@@ -409,7 +409,8 @@ if has('nvim')
   let $EDITOR = 'nvr -l'
 
   " Open neoterm windows in a vertical split
-  let g:neoterm_position = 'vertical'
+  " let g:neoterm_position = 'vertical'
+  let g:neoterm_default_mod=':vertical'
 
   " Leader + Esc = exit terminal mode
   tnoremap <Leader><Esc> <C-\><C-n>
@@ -516,7 +517,9 @@ let g:ctrlp_root_markers = ['stack*.yaml'] " '*.cabal',
 let g:ctrlp_match_func   = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_reuse_window = 'startify'
 let g:ctrlp_switch_buffer = ''
-let g:ctrlp_custom_ignore = 'tests/*'
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\v[\/](.git|.hg|.svn|tests|icebox)$'
+  \ }
 
 
 "-- Fugitive -------------------------------------------------------------------

@@ -287,10 +287,10 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     call <SID>X("PMenu", s:foreground, s:selection, "none")
     call <SID>X("PMenuSel", s:foreground, s:selection, "reverse")
     call <SID>X("SignColumn", "", s:background, "none")
-    call <SID>X("SpellBad", s:red, s:background, "undercurl")
-    call <SID>X("SpellCap", s:aqua, s:background, "undercurl")
-    call <SID>X("SpellLocal", s:aqua, s:background, "undercurl")
-    call <SID>X("SpellRare", s:purple, s:background, "undercurl")
+    call <SID>X("SpellBad", s:red, "", "undercurl")
+    call <SID>X("SpellCap", s:aqua, "", "undercurl")
+    call <SID>X("SpellLocal", s:aqua, "", "undercurl")
+    call <SID>X("SpellRare", s:purple, "", "undercurl")
   end
   if version >= 703
     call <SID>X("ColorColumn", "", s:line, "none")
@@ -298,7 +298,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 
   " Standard Highlighting
   call <SID>X("Comment", s:comment, "", "italic")
-  call <SID>X("Todo", s:comment, s:background, "bold")
+  call <SID>X("Todo", s:comment, "", "bold")
   call <SID>X("Title", s:comment, "", "")
   call <SID>X("Identifier", s:red, "", "none")
   call <SID>X("Statement", s:foreground, "", "")
