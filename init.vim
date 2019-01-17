@@ -196,6 +196,7 @@ set spelllang=en_au
 set termguicolors
 
 " The background colour brightness
+set background=light
 colorscheme chaos
 
 " Matches iTerm2 colours (???)
