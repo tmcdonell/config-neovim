@@ -287,8 +287,8 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     call <SID>X("PMenu", s:foreground, s:selection, "none")
     call <SID>X("PMenuSel", s:foreground, s:selection, "reverse")
     call <SID>X("SignColumn", "", s:background, "none")
-    call <SID>X("SpellBad", s:red, "", "undercurl")
-    call <SID>X("SpellCap", s:aqua, "", "undercurl")
+    call <SID>X("SpellBad", "", "", "undercurl") " fg: s:red
+    call <SID>X("SpellCap", "", "", "undercurl") " fg: s:aqua
     call <SID>X("SpellLocal", s:aqua, "", "undercurl")
     call <SID>X("SpellRare", s:purple, "", "undercurl")
   end
