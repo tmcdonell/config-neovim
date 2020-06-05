@@ -46,6 +46,7 @@ Plug 'moll/vim-bbye'
 
 " Visualise the vim undo tree
 Plug 'sjl/gundo.vim'
+" Plug 'mbbill/undotree'
 
 " Comment stuff out
 Plug 'tpope/vim-commentary'
@@ -63,8 +64,8 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 
 " vimscripts for haskell development
+Plug 'neovimhaskell/haskell-vim'
 Plug 'dag/vim2hs'
-" Plug 'neovimhaskell/haskell-vim'
 
 " Happy Haskell programming on Vim, powered by ghc-mod
 " Plug 'eagletmt/ghcmod-vim'
@@ -72,13 +73,23 @@ Plug 'dag/vim2hs'
 " Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 
 " Intero for neovim
-Plug 'parsonsmatt/intero-neovim'
+" Plug 'parsonsmatt/intero-neovim'
 
 " Quickfix error feedback via ghcid
 Plug 'cloudhead/neovim-ghcid'
 
+" The core of an IDE for Haskell
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/async.vim'
+
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'mattn/vim-lsp-settings'
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 " Dark powered asynchronous completion framework for neovim (requires python3)
-Plug 'Shougo/deoplete.nvim'
+" Plug 'Shougo/deoplete.nvim'
 
 " Syntax checking hacks for vim (requires +lua)
 " Plug 'scrooloose/syntastic'
@@ -143,6 +154,9 @@ Plug 'nathanaelkane/vim-indent-guides'
 
 " OpenCL syntax
 Plug 'brgmnn/vim-opencl'
+
+" org-mode for vim
+Plug 'jceb/vim-orgmode'
 
 call plug#end()
 
@@ -374,7 +388,7 @@ set wildignore+=*/.git/*
 set wildignore+=*/output/*
 set wildignore+=*/bower_components/*
 set wildignore+=*/node_modules/*
-set wildignore+=*/projects/*
+" set wildignore+=*/projects/*
 
 " Vim
 set wildignore+=*/spell/*
@@ -487,8 +501,16 @@ endif
 
 " -- GUndo ---------------------------------------------------------------------
 
+let g:gundo_prefer_python3 = 1
+
 " gundo toggle window
 nnoremap <F5> :GundoToggle<CR>
+
+
+"-- undotree -------------------------------------------------------------------
+
+" toggle undo window
+" nnoremap <F5> :UndotreeToggle<CR>
 
 
 "-- Grep -----------------------------------------------------------------------
@@ -675,8 +697,8 @@ augroup Haskell
   autocmd BufNewFile,BufRead *.chs   set filetype=haskell " c2hs
   autocmd BufNewFile,BufRead *.maxml set filetype=haskell " MaxML
 
-  " autocmd FileType haskell setlocal shiftwidth=2
-  " autocmd FileType haskell setlocal iskeyword=@,48-57,_,'
+  autocmd FileType haskell setlocal shiftwidth=2
+  autocmd FileType haskell setlocal iskeyword=@,48-57,_,'
   " autocmd FileType haskell setlocal foldcolumn=1
   autocmd FileType haskell setlocal path=src,,
   autocmd FileType haskell setlocal include=^import\\s*\\(qualified\\)\\?\\s*
@@ -701,9 +723,9 @@ augroup Haskell
   " autocmd FileType haskell nnoremap <silent> <LocalLeader>c :GhcModSplitFunCase<CR>
   " autocmd FileType haskell nnoremap <silent> <LocalLeader>d :GhcModSigCodegen<CR>
 
-  let g:haskellmode_completion_ghc     = 0
-  let g:necoghc_enable_detailed_browse = 1
-  autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+  " let g:haskellmode_completion_ghc     = 0
+  " let g:necoghc_enable_detailed_browse = 1
+  " autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
   " ghci
   autocmd FileType haskell nnoremap <silent> <LocalLeader>q :T :q<CR>:T ./cabal quick "%"<CR>
@@ -726,56 +748,99 @@ augroup Haskell
   let g:haskell_hsp=0
 
   " neovimhaskell/haskell-vim --------------------------------------------------
-  let g:haskell_indent_in=0
-  let g:haskell_enable_typeroles=1
-  let g:haskell_enable_pattern_synonyms=1
-  " let g:haskell_classic_highlighting=1
+  let g:haskell_classic_highlighting = 1    " no clown vomit
+
+  let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+  let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+  let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+  let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+  let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+  let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+  let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+  let g:haskell_indent_if = 3
+  let g:haskell_indent_in = 1
+  let g:haskell_indent_case = 2
+  let g:haskell_indent_let = 4
+  let g:haskell_indent_where = 6
+  let g:haskell_indent_before_where = 2
+  let g:haskell_indent_after_bare_where = 2
+  let g:haskell_indent_do = 3
+  let g:haskell_indent_guard = 2
+
+  let g:cabal_indent_section = 2
+
+  " nnoremap <F6> :call LanguageClient_contextMenu()<CR>
+  " " Or map each action separately
+  " nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+  " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+  " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 augroup END
 
+
+"-- ghcide ---------------------------------------------------------------------
+
+" let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
+" let g:LanguageClient_serverCommands = {
+"     \ 'rust': ['rls'],
+"     \ 'haskell': ['ghcide', '--lsp'],
+"     \ }
+
+" au User lsp_setup call lsp#register_server({
+"     \ 'name': 'ghcide',
+"     \ 'cmd': {server_info->['/Users/trevor/.local/bin/ghcide', '--lsp']},
+"     \ 'whitelist': ['haskell'],
+"     \ })
+
+" augroup lsp_install
+"   au!
+"   " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+"   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+" augroup END
 
 "-- Intero ---------------------------------------------------------------------
 
-augroup interoMaps
-  au!
-  " Maps for intero. Restrict to Haskell buffers so the bindings don't collide.
+" augroup interoMaps
+"   au!
+"   " Maps for intero. Restrict to Haskell buffers so the bindings don't collide.
 
-  " Background process and window management
-  au FileType haskell nnoremap <silent> <leader>is :InteroStart<CR>
-  au FileType haskell nnoremap <silent> <leader>ik :InteroKill<CR>
+"   " Background process and window management
+"   au FileType haskell nnoremap <silent> <leader>is :InteroStart<CR>
+"   au FileType haskell nnoremap <silent> <leader>ik :InteroKill<CR>
 
-  " Open intero/GHCi split horizontally
-  au FileType haskell nnoremap <silent> <leader>io :InteroOpen<CR>
-  " Open intero/GHCi split vertically
-  au FileType haskell nnoremap <silent> <leader>iov :InteroOpen<CR><C-W>H
-  au FileType haskell nnoremap <silent> <leader>ih :InteroHide<CR>
+"   " Open intero/GHCi split horizontally
+"   au FileType haskell nnoremap <silent> <leader>io :InteroOpen<CR>
+"   " Open intero/GHCi split vertically
+"   au FileType haskell nnoremap <silent> <leader>iov :InteroOpen<CR><C-W>H
+"   au FileType haskell nnoremap <silent> <leader>ih :InteroHide<CR>
 
-  " Reloading (pick one)
-  " Automatically reload on save
-  " au BufWritePost *.hs InteroReload
-  " Manually save and reload
-  au FileType haskell nnoremap <silent> <leader>wr :w \| :InteroReload<CR>
+"   " Reloading (pick one)
+"   " Automatically reload on save
+"   " au BufWritePost *.hs InteroReload
+"   " Manually save and reload
+"   au FileType haskell nnoremap <silent> <leader>wr :w \| :InteroReload<CR>
 
-  " Load individual modules
-  au FileType haskell nnoremap <silent> <leader>il :InteroLoadCurrentModule<CR>
-  au FileType haskell nnoremap <silent> <leader>if :InteroLoadCurrentFile<CR>
+"   " Load individual modules
+"   au FileType haskell nnoremap <silent> <leader>il :InteroLoadCurrentModule<CR>
+"   au FileType haskell nnoremap <silent> <leader>if :InteroLoadCurrentFile<CR>
 
-  " Type-related information
-  " Heads up! These next two differ from the rest.
-  au FileType haskell map <silent> <leader>it <Plug>InteroGenericType
-  au FileType haskell map <silent> <leader>iT <Plug>InteroType
-  au FileType haskell nnoremap <silent> <leader>iit :InteroTypeInsert<CR>
+"   " Type-related information
+"   " Heads up! These next two differ from the rest.
+"   au FileType haskell map <silent> <leader>it <Plug>InteroGenericType
+"   au FileType haskell map <silent> <leader>iT <Plug>InteroType
+"   au FileType haskell nnoremap <silent> <leader>iit :InteroTypeInsert<CR>
 
-  " Navigation
-  au FileType haskell nnoremap <silent> <leader>jd :InteroGoToDef<CR>
+"   " Navigation
+"   au FileType haskell nnoremap <silent> <leader>jd :InteroGoToDef<CR>
 
-  " Managing targets
-  " Prompts you to enter targets (no silent):
-  au FileType haskell nnoremap <leader>ist :InteroSetTargets<SPACE>
-augroup END
+"   " Managing targets
+"   " Prompts you to enter targets (no silent):
+"   au FileType haskell nnoremap <leader>ist :InteroSetTargets<SPACE>
+" augroup END
 
-" Intero starts automatically. Set this if you'd like to prevent that.
-let g:intero_start_immediately = 0
+" " Intero starts automatically. Set this if you'd like to prevent that.
+" let g:intero_start_immediately = 0
 
 
 "-- Markdown -------------------------------------------------------------------
