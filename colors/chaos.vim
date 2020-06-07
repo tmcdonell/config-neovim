@@ -341,6 +341,11 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("cabalStatement", s:orange, "", "")
   call <SID>X("cabalConditional", s:orange, "", "")
 
+  call <SID>X("Warning", s:yellow, "", "undercurl")
+  hi link ALEError Error
+  hi link ALEWarning Warning
+  hi link ALEInfo SpellCap
+
   " Delete Functions
   delf <SID>X
   delf <SID>rgb

@@ -79,14 +79,13 @@ Plug 'dag/vim2hs'
 Plug 'cloudhead/neovim-ghcid'
 
 " The core of an IDE for Haskell
-Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/async.vim'
-
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" Plug 'mattn/vim-lsp-settings'
-" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'mattn/vim-lsp-settings'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Dark powered asynchronous completion framework for neovim (requires python3)
 " Plug 'Shougo/deoplete.nvim'
@@ -770,22 +769,22 @@ augroup Haskell
 
   let g:cabal_indent_section = 2
 
-  " nnoremap <F6> :call LanguageClient_contextMenu()<CR>
-  " " Or map each action separately
-  " nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-  " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-  " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+  nnoremap <F6> :call LanguageClient_contextMenu()<CR>
+  " Or map each action separately
+  nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 augroup END
 
 
-"-- ghcide ---------------------------------------------------------------------
+"-- haskell-ide-engine ---------------------------------------------------------
 
-" let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
-" let g:LanguageClient_serverCommands = {
-"     \ 'rust': ['rls'],
-"     \ 'haskell': ['ghcide', '--lsp'],
-"     \ }
+let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
+let g:LanguageClient_serverCommands = {
+      \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+      \ 'haskell': ['hie-wrapper', '--lsp']
+      \ }
 
 " au User lsp_setup call lsp#register_server({
 "     \ 'name': 'ghcide',

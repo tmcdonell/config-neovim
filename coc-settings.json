@@ -1,7 +1,7 @@
 {
   "languageserver": {
     "haskell": {
-      "command": "ghcide",
+      "command": "hie-wrapper",
       "args": [
         "--lsp"
       ],
@@ -9,8 +9,8 @@
         ".stack.yaml",
         ".hie-bios",
         "BUILD.bazel",
-        "cabal.config",
-        "package.yaml"
+        "package.yaml",
+        "cabal.project"
       ],
       "filetypes": [
         "hs",
