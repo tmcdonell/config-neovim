@@ -81,9 +81,9 @@ Plug 'cloudhead/neovim-ghcid'
 " The core of an IDE for Haskell
 " Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'mattn/vim-lsp-settings'
+" Plug 'mattn/vim-lsp-settings'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -94,7 +94,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'scrooloose/syntastic'
 
 " Automatic resizing of Vim windows to the golden ratio
-" Plug 'roman/golden-ratio'
+Plug 'roman/golden-ratio'
 
 " LLVM syntax
 Plug 'Superbil/llvm.vim'
@@ -769,7 +769,7 @@ augroup Haskell
 
   let g:cabal_indent_section = 2
 
-  nnoremap <F6> :call LanguageClient_contextMenu()<CR>
+  nnoremap <F4> :call LanguageClient_contextMenu()<CR>
   " Or map each action separately
   nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
   nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
