@@ -1,7 +1,7 @@
 {
   "languageserver": {
     "haskell": {
-      "command": "hie-wrapper",
+      "command": "ghcide",
       "args": [
         "--lsp"
       ],

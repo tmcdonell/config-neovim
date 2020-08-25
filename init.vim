@@ -783,14 +783,14 @@ augroup END
 let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
 let g:LanguageClient_serverCommands = {
       \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-      \ 'haskell': ['hie-wrapper', '--lsp']
+      \ 'haskell': ['ghcide', '--lsp']
       \ }
 
-" au User lsp_setup call lsp#register_server({
-"     \ 'name': 'ghcide',
-"     \ 'cmd': {server_info->['/Users/trevor/.local/bin/ghcide', '--lsp']},
-"     \ 'whitelist': ['haskell'],
-"     \ })
+au User lsp_setup call lsp#register_server({
+    \ 'name': 'ghcide',
+    \ 'cmd': {server_info->['/Users/trevor/.local/bin/ghcide', '--lsp']},
+    \ 'whitelist': ['haskell'],
+    \ })
 
 " augroup lsp_install
 "   au!
