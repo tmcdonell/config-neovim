@@ -143,7 +143,7 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'justinmk/vim-sneak'
 
 " Fuzzy command-line finder
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " Support for using neovim as a remote process
 Plug 'mhinz/neovim-remote'
