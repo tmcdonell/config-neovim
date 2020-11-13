@@ -80,12 +80,12 @@ Plug 'cloudhead/neovim-ghcid'
 
 " The core of an IDE for Haskell
 " Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/async.vim'
 " Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " Plug 'mattn/vim-lsp-settings'
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Dark powered asynchronous completion framework for neovim (requires python3)
 " Plug 'Shougo/deoplete.nvim'
@@ -156,6 +156,10 @@ Plug 'brgmnn/vim-opencl'
 
 " org-mode for vim
 Plug 'jceb/vim-orgmode'
+Plug 'mattn/calendar-vim'
+Plug 'inkarkat/vim-SyntaxRange'
+Plug 'tpope/vim-speeddating'
+Plug 'vim-scripts/utl.vim'
 
 call plug#end()
 
