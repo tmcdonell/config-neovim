@@ -94,7 +94,7 @@ Plug 'cloudhead/neovim-ghcid'
 " Plug 'scrooloose/syntastic'
 
 " Automatic resizing of Vim windows to the golden ratio
-Plug 'roman/golden-ratio'
+" Plug 'roman/golden-ratio'
 
 " LLVM syntax
 Plug 'Superbil/llvm.vim'
