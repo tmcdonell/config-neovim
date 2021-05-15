@@ -23,7 +23,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'dag/vim-fish'
 
 " Fast vim CtrlP matcher based on python
-Plug 'FelikZ/ctrlp-py-matcher'
+" Plug 'FelikZ/ctrlp-py-matcher'
 
 " Configurable, flexible, intuitive text aligning
 Plug 'godlygeek/tabular'
@@ -55,7 +55,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 
 " Show git diff in the gutter
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 
 " Complementary pairs of mappings
 Plug 'tpope/vim-unimpaired'
@@ -76,7 +76,7 @@ Plug 'dag/vim2hs'
 " Plug 'parsonsmatt/intero-neovim'
 
 " Quickfix error feedback via ghcid
-Plug 'cloudhead/neovim-ghcid'
+" Plug 'cloudhead/neovim-ghcid'
 
 " The core of an IDE for Haskell
 " Plug 'prabirshrestha/asyncomplete.vim'
@@ -144,6 +144,7 @@ Plug 'plasticboy/vim-markdown'
 
 " Fuzzy command-line finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Support for using neovim as a remote process
 Plug 'mhinz/neovim-remote'
@@ -155,11 +156,11 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'brgmnn/vim-opencl'
 
 " org-mode for vim
-Plug 'jceb/vim-orgmode'
-Plug 'mattn/calendar-vim'
-Plug 'inkarkat/vim-SyntaxRange'
-Plug 'tpope/vim-speeddating'
-Plug 'vim-scripts/utl.vim'
+" Plug 'jceb/vim-orgmode'
+" Plug 'mattn/calendar-vim'
+" Plug 'inkarkat/vim-SyntaxRange'
+" Plug 'tpope/vim-speeddating'
+" Plug 'vim-scripts/utl.vim'
 
 call plug#end()
 
@@ -239,12 +240,15 @@ let g:terminal_color_15 = '#efeee0'
 
 let g:airline_powerline_fonts                   = 1
 let g:airline_theme                             = 'tomorrow'
+let g:airline_skip_empty_sections               = 1
+let g:airline_highlighting_cache                = 1
 let g:airline#extensions#tabline#enabled        = 1
 let g:airline#extensions#tabline#fnamecollapse  = 0
 let g:airline#extensions#tabline#formatter      = 'unique_tail_improved'
 let g:airline#extensions#tabline#fnamemod       = ':t'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tmuxline#enabled       = 0
+let g:airline#extensions#scrollbar#enabled      = 0
 
 
 " -- Buffers & Entering text ---------------------------------------------------
@@ -533,22 +537,46 @@ nnoremap <Leader>G
 
 "-- Ctrl+P ---------------------------------------------------------------------
 
+" " Leader + t = find file in project
+" nnoremap <silent> <Leader>t :CtrlP<CR>
+
+" " Leader + b = find file in open buffers
+" nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
+
+" " Leader + r = clean file cache
+" nnoremap <silent> <Leader>r :CtrlPClearCache<CR>
+
+" let g:ctrlp_root_markers = ['stack*.yaml'] " '*.cabal',
+" let g:ctrlp_match_func   = { 'match': 'pymatcher#PyMatch' }
+" let g:ctrlp_reuse_window = 'startify'
+" let g:ctrlp_switch_buffer = ''
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir': '\v[\/](.git|.hg|.svn|tests|icebox)$'
+"   \ }
+
+"-- FZF ------------------------------------------------------------------------
+
+if has("nvim")
+  " Escape inside a FZF terminal window should exit the terminal window
+  " rather than going into the terminal's normal mode.
+  autocmd FileType fzf tnoremap <buffer> <Esc> <Esc>
+endif
+
 " Leader + t = find file in project
-nnoremap <silent> <Leader>t :CtrlP<CR>
+nnoremap <silent> <Leader>t :Files<CR>
 
 " Leader + b = find file in open buffers
-nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
+nnoremap <silent> <Leader>b :Buffers<CR>
 
-" Leader + r = clean file cache
-nnoremap <silent> <Leader>r :CtrlPClearCache<CR>
+" Jump to the existing window if possible
+let g:fzf_buffers_jump = 0
 
-let g:ctrlp_root_markers = ['stack*.yaml'] " '*.cabal',
-let g:ctrlp_match_func   = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_reuse_window = 'startify'
-let g:ctrlp_switch_buffer = ''
-let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/](.git|.hg|.svn|tests|icebox)$'
-  \ }
+" Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+
+" --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
 
 
 "-- Fugitive -------------------------------------------------------------------
