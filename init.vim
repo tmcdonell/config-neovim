@@ -9,6 +9,9 @@ call plug#begin('~/.config/nvim/plug')
 " A minimalist vim plugin manager (disabled: cannot bootstrap)
 " Plug 'junegunn/vim-plug'
 
+" A collection of language packs for vim
+Plug 'sheerun/vim-polyglot'
+
 " A plugin for asynchronous :make using Neovim's job-control functionality
 Plug 'neomake/neomake'
 
@@ -64,7 +67,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 
 " vimscripts for haskell development
-Plug 'neovimhaskell/haskell-vim'
+" Plug 'neovimhaskell/haskell-vim'
 Plug 'dag/vim2hs'
 
 " Happy Haskell programming on Vim, powered by ghc-mod
@@ -97,7 +100,7 @@ Plug 'dag/vim2hs'
 " Plug 'roman/golden-ratio'
 
 " LLVM syntax
-Plug 'Superbil/llvm.vim'
+" Plug 'Superbil/llvm.vim'
 
 " A vim plugin for vim plugins
 Plug 'tpope/vim-scriptease'
@@ -153,14 +156,14 @@ Plug 'mhinz/neovim-remote'
 Plug 'nathanaelkane/vim-indent-guides'
 
 " OpenCL syntax
-Plug 'brgmnn/vim-opencl'
+" Plug 'brgmnn/vim-opencl'
 
 " org-mode for vim
-" Plug 'jceb/vim-orgmode'
-" Plug 'mattn/calendar-vim'
-" Plug 'inkarkat/vim-SyntaxRange'
-" Plug 'tpope/vim-speeddating'
-" Plug 'vim-scripts/utl.vim'
+Plug 'jceb/vim-orgmode'
+Plug 'mattn/calendar-vim'
+Plug 'inkarkat/vim-SyntaxRange'
+Plug 'tpope/vim-speeddating'
+Plug 'vim-scripts/utl.vim'
 
 call plug#end()
 
@@ -217,23 +220,23 @@ set termguicolors
 set background=light
 colorscheme chaos
 
-" Matches iTerm2 colours (???)
-let g:terminal_color_0  = '#808080'
-let g:terminal_color_1  = '#da4f56'
-let g:terminal_color_2  = '#78af54'
-let g:terminal_color_3  = '#fa8e43'
-let g:terminal_color_4  = '#6197d4'
-let g:terminal_color_5  = '#cf9af8'
-let g:terminal_color_6  = '#50c283'
-let g:terminal_color_7  = '#d6d6c6'
-let g:terminal_color_8  = '#bdbdbd'
-let g:terminal_color_9  = '#fc767c'
-let g:terminal_color_10 = '#95da72'
-let g:terminal_color_11 = '#fecc7a'
-let g:terminal_color_12 = '#8ebaf6'
-let g:terminal_color_13 = '#f7bdff'
-let g:terminal_color_14 = '#67e39f'
-let g:terminal_color_15 = '#efeee0'
+" " Matches iTerm2 colours (???)
+" let g:terminal_color_0  = '#808080'
+" let g:terminal_color_1  = '#da4f56'
+" let g:terminal_color_2  = '#78af54'
+" let g:terminal_color_3  = '#fa8e43'
+" let g:terminal_color_4  = '#6197d4'
+" let g:terminal_color_5  = '#cf9af8'
+" let g:terminal_color_6  = '#50c283'
+" let g:terminal_color_7  = '#d6d6c6'
+" let g:terminal_color_8  = '#bdbdbd'
+" let g:terminal_color_9  = '#fc767c'
+" let g:terminal_color_10 = '#95da72'
+" let g:terminal_color_11 = '#fecc7a'
+" let g:terminal_color_12 = '#8ebaf6'
+" let g:terminal_color_13 = '#f7bdff'
+" let g:terminal_color_14 = '#67e39f'
+" let g:terminal_color_15 = '#efeee0'
 
 
 "-- Airline --------------------------------------------------------------------
@@ -300,7 +303,7 @@ set nowrap
 set linebreak
 
 " don't redraw while executing macros
-set lazyredraw
+" set lazyredraw
 
 " show the (relative) line number for each line
 set number
@@ -338,13 +341,16 @@ set nosplitbelow
 set whichwrap=b,s,h,l,<,>,~,[,]
 
 " number of spaces used for each step of (auto)indent
-set shiftwidth=4
+set shiftwidth=2
 
 " a <Tab> in an indent inserts 'shiftwidth' spaces
 set smarttab
 
+" number of spaces that a <Tab> in a file counts for
+set tabstop=8
+
 " number of spaces to insert for a <Tab>
-set softtabstop=8
+set softtabstop=2
 
 " expand <Tab> to spaces in Insert mode
 set expandtab

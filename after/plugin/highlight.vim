@@ -6,5 +6,5 @@
 " its colour groups correctly.
 "
 
-" highlight Normal ctermbg=None guibg=None
+highlight Normal ctermbg=None guibg=None
 
