@@ -7,4 +7,6 @@
 "
 
 highlight Normal ctermbg=None guibg=None
+highlight SpellBad gui=undercurl
+highlight SpellCap gui=undercurl
 

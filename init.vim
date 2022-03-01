@@ -891,6 +891,10 @@ augroup markdown
   autocmd FileType markdown setlocal conceallevel=2
 augroup END
 
+"-- Lox ------------------------------------------------------------------------
+
+autocmd BufNewFile,BufRead *.lox set filetype=lox
+
 "-- Deoplete -------------------------------------------------------------------
 
 let g:deoplete#enable_at_startup = 1
