@@ -328,14 +328,20 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call <SID>X("gitcommitSummary", "", "", "bold")
 
   " Haskell
-  call <SID>X("hsImport", s:orange, "", "")
-  call <SID>X("hsImportKeyword", s:orange, "", "")
-  call <SID>X("hsKeyword", s:blue, "", "")
+  " call <SID>X("hsImport", s:orange, "", "")
+  " call <SID>X("hsImportKeywords", s:orange, "", "")
+  " call <SID>X("hsKeyword", s:blue, "", "")
+
+  call <SID>X("haskellImport", s:orange, "", "")
+  call <SID>X("haskellImportKeywords", s:orange, "", "")
+  call <SID>X("haskellIdentifier", s:blue, "", "bold")
+  call <SID>X("haskellForall", s:blue, "", "")
+
   " call <SID>X("hsConditional", s:orange, "", "")
-  call <SID>X("hsStructure", s:blue, "", "")
-  call <SID>X("hsExprKeyword", s:orange, "", "")
-  call <SID>X("hsStatement", s:purple, "", "")
-  call <SID>X("hsIdentifier", s:foreground, "", "")
+  " call <SID>X("hsStructure", s:blue, "", "")
+  " call <SID>X("hsExprKeyword", s:orange, "", "")
+  " call <SID>X("hsStatement", s:purple, "", "")
+  " call <SID>X("haskellIdentifier", s:foreground, "", "")
   " call <SID>X("hsType", s:magenta, "", "")
 
   call <SID>X("cabalIdentifier", s:blue, "", "")

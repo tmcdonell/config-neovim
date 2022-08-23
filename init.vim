@@ -55,7 +55,7 @@ Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-commentary'
 
 " A Git wrapper so awesome, it should be illegal
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 
 " Show git diff in the gutter
 " Plug 'airblade/vim-gitgutter'
@@ -67,8 +67,8 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 
 " vimscripts for haskell development
-" Plug 'neovimhaskell/haskell-vim'
-Plug 'dag/vim2hs'
+Plug 'neovimhaskell/haskell-vim'
+" Plug 'dag/vim2hs'   " syntax highlighting is slow as all fuck
 
 " Happy Haskell programming on Vim, powered by ghc-mod
 " Plug 'eagletmt/ghcmod-vim'
@@ -103,7 +103,7 @@ Plug 'dag/vim2hs'
 " Plug 'Superbil/llvm.vim'
 
 " A vim plugin for vim plugins
-Plug 'tpope/vim-scriptease'
+" Plug 'tpope/vim-scriptease'
 
 " Highlight trailing whitespace
 " Plug 'bronson/vim-trailing-whitespace'
@@ -124,13 +124,13 @@ Plug 'tpope/vim-surround'
 " Repeat supported plugin maps with "."
 Plug 'tpope/vim-repeat'
 
-" Live preview markdown files
-function! CargoBuild(info)
-  if a:info.status != 'unchanged' || a:info.force
-    !env C_INCLUDE_PATH=/usr/local/homebrew/opt/openssl/include cargo build --release
-    UpdateRemotePlugins
-  endif
-endfunction
+" " Live preview markdown files
+" function! CargoBuild(info)
+"   if a:info.status != 'unchanged' || a:info.force
+"     !env C_INCLUDE_PATH=/usr/local/homebrew/opt/openssl/include cargo build --release
+"     UpdateRemotePlugins
+"   endif
+" endfunction
 
 " Plug 'euclio/vim-markdown-composer', { 'do': function('CargoBuild') }
   " NOTE: OpenSSL installed via Homebrew is not linked to the system paths by
@@ -146,24 +146,29 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'justinmk/vim-sneak'
 
 " Fuzzy command-line finder
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+" Plug 'ibhagwan/fzf-lua'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Support for using neovim as a remote process
 Plug 'mhinz/neovim-remote'
 
 " Visually display indent level of code
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
 
 " OpenCL syntax
 " Plug 'brgmnn/vim-opencl'
 
 " org-mode for vim
-Plug 'jceb/vim-orgmode'
-Plug 'mattn/calendar-vim'
-Plug 'inkarkat/vim-SyntaxRange'
-Plug 'tpope/vim-speeddating'
-Plug 'vim-scripts/utl.vim'
+" Plug 'jceb/vim-orgmode'
+" Plug 'mattn/calendar-vim'
+" Plug 'inkarkat/vim-SyntaxRange'
+" Plug 'tpope/vim-speeddating'
+" Plug 'vim-scripts/utl.vim'
 
 call plug#end()
 
@@ -204,7 +209,10 @@ syntax on
 set hlsearch
 
 " highlight the screen line of the cursor (local to window)
-set cursorline
+" set cursorline
+
+" Maximum column in which to search for syntax items
+set synmaxcol=400
 
 " spell highlight spelling mistakes, list of accepted languages
 set spell
@@ -303,7 +311,7 @@ set nowrap
 set linebreak
 
 " don't redraw while executing macros
-" set lazyredraw
+set lazyredraw
 
 " show the (relative) line number for each line
 set number
@@ -331,7 +339,7 @@ set backspace=indent,eol,start
 set nojoinspaces
 
 " don't unload buffers when switching away
-set hidden
+" set hidden
 
 " split new windows to the right or below of the current one
 set splitright
@@ -402,13 +410,16 @@ set wildignore+=*/output/*
 set wildignore+=*/bower_components/*
 set wildignore+=*/node_modules/*
 " set wildignore+=*/projects/*
+set wildignore+=*/icebox/*
 
 " Vim
 set wildignore+=*/spell/*
 set wildignore+=*/plugged/*
 
 " Haskell
-set wildignore+=*/dist/*,*/.cabal-sandbox/*,*/.stack-work/*
+set wildignore+=*/dist/*
+set wildignore+=*/.cabal-sandbox/*
+set wildignore+=*/.stack-work/*
 
 
 " -- Windows -------------------------------------------------------------------
@@ -562,28 +573,41 @@ nnoremap <Leader>G
 
 "-- FZF ------------------------------------------------------------------------
 
-if has("nvim")
-  " Escape inside a FZF terminal window should exit the terminal window
-  " rather than going into the terminal's normal mode.
-  autocmd FileType fzf tnoremap <buffer> <Esc> <Esc>
-endif
+" if has("nvim")
+"   " Escape inside a FZF terminal window should exit the terminal window
+"   " rather than going into the terminal's normal mode.
+"   autocmd FileType fzf tnoremap <buffer> <Esc> <Esc>
+" endif
 
-" Leader + t = find file in project
-nnoremap <silent> <Leader>t :Files<CR>
+" " Leader + t = find file in project
+" " nnoremap <silent> <Leader>t :Files<CR>
+" nnoremap <silent> <Leader>t <cmd>lua require('fzf-lua').files()<CR>
 
-" Leader + b = find file in open buffers
-nnoremap <silent> <Leader>b :Buffers<CR>
+" " Leader + b = find file in open buffers
+" " nnoremap <silent> <Leader>b :Buffers<CR>
+" nnoremap <silent> <Leader>b <cmd>lua require('fzf-lua').buffers()<CR>
 
-" Jump to the existing window if possible
-let g:fzf_buffers_jump = 0
+" " Jump to the existing window if possible
+" let g:fzf_buffers_jump = 0
 
-" Command to generate tags file
-let g:fzf_tags_command = 'ctags -R'
+" " Command to generate tags file
+" let g:fzf_tags_command = 'ctags -R'
 
-" --expect expression for directly executing the command
-let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+" " --expect expression for directly executing the command
+" let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 
+"-- Telescope ------------------------------------------------------------------
 
+lua <<EOF
+require('telescope').setup{}
+require('telescope').load_extension('fzf')
+EOF
+
+nnoremap <Leader>t <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <Leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
+
+" nnoremap <leader>t <cmd>Telescope find_files<cr>
+" nnoremap <leader>b <cmd>Telescope buffers<cr>
 
 "-- Fugitive -------------------------------------------------------------------
 
@@ -792,8 +816,8 @@ augroup Haskell
   let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
   let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
   let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-  let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-  let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+  let g:haskell_enable_static_pointers = 0  " to enable highlighting of `static`
+  let g:haskell_backpack = 0                " to enable highlighting of backpack keywords
 
   let g:haskell_indent_if = 3
   let g:haskell_indent_in = 1
