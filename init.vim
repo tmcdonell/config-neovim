@@ -222,7 +222,9 @@ set spelllang=en_au
 " -- Colours -------------------------------------------------------------------
 
 " Enable 24-bit colour mode
-set termguicolors
+if !$TERM_PROGRAM =~ "Apple_Terminal"
+  set termguicolors
+endif
 
 " The background colour brightness
 set background=light
