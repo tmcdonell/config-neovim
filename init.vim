@@ -58,7 +58,7 @@ Plug 'tpope/vim-commentary'
 " Plug 'tpope/vim-fugitive'
 
 " Show git diff in the gutter
-" Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 
 " Complementary pairs of mappings
 Plug 'tpope/vim-unimpaired'
