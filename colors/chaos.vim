@@ -246,10 +246,14 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 
   " Sets the highlighting for the given group
   fun <SID>X(group, fg, bg, attr)
-    if a:fg != ""
+    if a:fg == ""
+      exec "hi " . a:group . " guifg=none ctermfg=none"
+    else
       exec "hi " . a:group . " guifg=#" . a:fg . " ctermfg=" . <SID>rgb(a:fg)
     endif
-    if a:bg != ""
+    if a:bg == ""
+      exec "hi " . a:group . " guibg=none ctermbg=none"
+    else
       exec "hi " . a:group . " guibg=#" . a:bg . " ctermbg=" . <SID>rgb(a:bg)
     endif
     if a:attr != ""
@@ -290,8 +294,8 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     call <SID>X("SignColumn", "", s:background, "none")
     call <SID>X("SpellBad", "", "", "undercurl") " fg: s:red
     call <SID>X("SpellCap", "", "", "undercurl") " fg: s:aqua
-    call <SID>X("SpellLocal", s:aqua, "", "undercurl")
-    call <SID>X("SpellRare", s:purple, "", "undercurl")
+    call <SID>X("SpellLocal", "", "", "undercurl") " fg: s:aqua
+    call <SID>X("SpellRare", "", "", "undercurl") " fg: s:purple
   end
   if version >= 703
     call <SID>X("ColorColumn", "", s:line, "none")
@@ -299,7 +303,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 
   " Standard Highlighting
   call <SID>X("Comment", s:comment, "", "italic")
-  call <SID>X("Todo", s:comment, "", "bold")
+  call <SID>X("Todo", s:comment, s:yellow, "bold")
   call <SID>X("Title", s:comment, "", "")
   call <SID>X("Identifier", s:red, "", "none")
   call <SID>X("Statement", s:foreground, "", "")

@@ -69,6 +69,7 @@ Plug 'tpope/vim-vinegar'
 " vimscripts for haskell development
 Plug 'neovimhaskell/haskell-vim'
 " Plug 'dag/vim2hs'   " syntax highlighting is slow as all fuck
+" Plug 'vmchale/cabal-project-vim'
 
 " Happy Haskell programming on Vim, powered by ghc-mod
 " Plug 'eagletmt/ghcmod-vim'
