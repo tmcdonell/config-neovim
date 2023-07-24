@@ -84,10 +84,10 @@ return {
             map('n', '<Leader>hR', gs.reset_buffer)
             map('n', '<Leader>hp', gs.preview_hunk)
             map('n', '<Leader>hb', function() gs.blame_line{full=true} end)
-            map('n', '<Leader>tb', gs.toggle_current_line_blame)
+            -- map('n', '<Leader>tb', gs.toggle_current_line_blame)
             map('n', '<Leader>hd', gs.diffthis)
             map('n', '<Leader>hD', function() gs.diffthis('~') end)
-            map('n', '<Leader>td', gs.toggle_deleted)
+            -- map('n', '<Leader>td', gs.toggle_deleted)
 
             -- Text object
             map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
