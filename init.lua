@@ -68,6 +68,7 @@ vim.api.nvim_create_autocmd('ColorScheme',
   { desc = "Clear cell background colour to significantly improve rendering speed"
   , callback = function()
       vim.cmd.highlight('Normal', 'guibg=clear')
+      vim.cmd.highlight('NormalNC', 'guibg=clear')
     end
   })
 
