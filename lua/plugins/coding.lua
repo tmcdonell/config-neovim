@@ -14,6 +14,7 @@ return {
   { 'nvim-telescope/telescope.nvim'
   , dependencies =
       { 'nvim-telescope/telescope-fzf-native.nvim'
+      , 'nvim-tree/nvim-web-devicons'
       , 'nvim-lua/plenary.nvim'
       }
   , config = function()
