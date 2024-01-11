@@ -94,10 +94,12 @@ if vim.env.TERM == 'xterm-kitty' then
         vim.fn.jobstart('kitty @ get-colors | grep "^background" | tr -s " " | cut -d " " -f2',
           { stdout_buffered = true
           , on_stdout = function(jobid, data, event)
-              if data[1] == "#ffffff" then
-                vim.opt.background = 'light'
-              else
-                vim.opt.background = 'dark'
+              if data[1] ~= "" then
+                if data[1] == "#ffffff" then
+                  vim.opt.background = 'light'
+                else
+                  vim.opt.background = 'dark'
+                end
               end
             end
           })
