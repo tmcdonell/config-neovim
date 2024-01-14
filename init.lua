@@ -159,3 +159,5 @@ local process_viewer = require('toggleterm.terminal').Terminal:new(
   })
 vim.keymap.set('n', '<Leader>xp', function() process_viewer:toggle() end, { silent = true })
 
+vim.keymap.set('n', '-', function() vim.cmd('Oil') end)
+

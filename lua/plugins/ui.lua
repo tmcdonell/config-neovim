@@ -2,7 +2,16 @@ return {
   { 'RRethy/nvim-base16'
   },
 
-  { 'tpope/vim-vinegar'
+  -- { 'tpope/vim-vinegar'
+  -- },
+
+  { 'stevearc/oil.nvim'
+  , dependencies = { 'nvim-tree/nvim-web-devicons' }
+  , config = function()
+      require('oil').setup
+        { -- view_options = { show_hidden = true }
+        }
+    end
   },
 
   { 'tpope/vim-unimpaired'
