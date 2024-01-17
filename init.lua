@@ -141,6 +141,8 @@ vim.keymap.set('n', '<Leader>tb', telescope.buffers, {})
 vim.keymap.set('n', '<Leader>th', telescope.help_tags, {})
 vim.keymap.set('n', '<Leader>tr', telescope.oldfiles, {})
 -- vim.keymap.set('n', '<Leader>tc', telescope.colorscheme, {})
+vim.keymap.set('n', '<Leader>tu', require('telescope').extensions.undo.undo, {})
+vim.keymap.set('n', '<Leader>tf', require('telescope').extensions.file_browser.file_browser, {})
 
 local lazygit = require('toggleterm.terminal').Terminal:new(
   { cmd = 'lazygit'

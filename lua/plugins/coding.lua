@@ -16,10 +16,13 @@ return {
       { 'nvim-telescope/telescope-fzf-native.nvim'
       , 'nvim-tree/nvim-web-devicons'
       , 'nvim-lua/plenary.nvim'
+      , 'debugloop/telescope-undo.nvim'
       }
   , config = function()
       require('telescope').setup()
       require('telescope').load_extension('fzf')
+      require('telescope').load_extension('file_browser')
+      require('telescope').load_extension('undo')
     end
   },
 
