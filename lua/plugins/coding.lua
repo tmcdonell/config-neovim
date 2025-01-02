@@ -108,7 +108,7 @@ return {
         }
 
       require('lspconfig').sourcekit.setup
-        { autostart = true
+        { autostart = false
         -- , filetypes = { 'c', 'cpp', 'swift' }
         }
 
