@@ -21,7 +21,7 @@ vim.opt.spelllang = 'en_au'
 vim.opt.splitright = true
 -- vim.opt.splitbelow = true
 vim.opt.termguicolors = true
-vim.opt.clipboard = 'unnamed'
+vim.opt.clipboard = 'unnamedplus'
 vim.opt.formatoptions:remove { 't' }
 
 -- ========================================================================== --
@@ -105,6 +105,17 @@ if vim.env.TERM == 'xterm-kitty' then
           })
       end
     })
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+      ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    },
+  }
 else
   vim.opt.background = 'light'
 end
