@@ -176,5 +176,53 @@ return {
         }
     end
   },
+
+  { "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts =
+      { library =
+          -- Load luvit types when the `vim.uv` word is found
+          { { path = "${3rd}/luv/library", words = { "vim%.uv" } }
+          , { plugins = { "nvim-dap-ui" }, types = true }
+          },
+      },
+  },
+
+  { "rcarriga/nvim-dap-ui"
+  , dependencies =
+      { "mfussenegger/nvim-dap"
+      , "nvim-neotest/nvim-nio"
+      }
+  , config = function()
+      require("dapui").setup{
+        layouts =
+          { { elements =
+                { { id = "scopes",      size = 0.50 }
+                , { id = "stacks",      size = 0.35 }
+                , { id = "breakpoints", size = 0.15 }
+                }
+                , position = "left"
+                , size = 50
+            }
+          , { elements =
+                { { id = "repl",    size = 0.5 }
+                , { id = "console", size = 0.5 }
+                }
+                , position = "bottom"
+                , size = 10
+            }
+          }
+      }
+    end
+  }
+
+  --{ "igorlfs/nvim-dap-view"
+  --, dependencies =
+  --    { "mfussenegger/nvim-dap"
+  --    }
+  --  ---@module 'dap-view'
+  --  ---@type dapview.Config
+  --, opts = {}
+  --}
 }
 

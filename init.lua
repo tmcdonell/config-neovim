@@ -174,3 +174,97 @@ vim.keymap.set('n', '<Leader>xp', function() process_viewer:toggle() end, { sile
 
 vim.keymap.set('n', '-', function() vim.cmd('Oil') end)
 
+local dap = require("dap")
+dap.adapters.gdb =
+  { type = "executable"
+  , command = "gdb"
+  , args = { "--interpreter=dap", "--eval-command", "set pretty print on" }
+  }
+dap.configurations.c =
+  { { name = "Launch"
+    , type = "gdb"
+    , request = "launch"
+    , program = function()
+        local path = vim.fn.input(
+          { prompt = 'Path to executable: '
+          , default = vim.fn.getcwd() .. '/'
+          , completion = 'file'
+        })
+        return (path and path ~= "") and path or dap.ABORT
+      end
+    , cwd = "${workspaceFolder}"
+    , stopAtBeginningOfMainSubprogram = true
+    }
+  , { name = "Select and attach to process"
+    , type = "gdb"
+    , request = "attach"
+    , program = function()
+        local path = vim.fn.input(
+          { prompt = 'Path to executable: '
+          , default = vim.fn.getcwd() .. '/'
+          , completion = 'file'
+        })
+        return (path and path ~= "") and path or dap.ABORT
+      end
+    , pid = function()
+        local name = vim.fn.input('Executable name (filter): ')
+        return require("dap.utils").pick_process({ filter = name })
+      end
+    , cwd = '${workspaceFolder}'
+    }
+  , { name = 'Attach to gdbserver :1234'
+    , type = 'gdb'
+    , request = 'attach'
+    , target = 'localhost:1234'
+    , program = function()
+        local path = vim.fn.input(
+          { prompt = 'Path to executable: '
+          , default = vim.fn.getcwd() .. '/'
+          , completion = 'file'
+        })
+        return (path and path ~= "") and path or dap.ABORT
+      end
+    , cwd = '${workspaceFolder}'
+    }
+  }
+dap.configurations.cpp = dap.configurations.c
+
+local dapui = require("dapui")
+dap.listeners.before.attach.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+  dapui.close()
+end
+
+vim.keymap.set('n', '<F5>', function() dap.continue() end)
+vim.keymap.set('n', '<F10>', function() dap.step_over() end)
+vim.keymap.set('n', '<F11>', function() dap.step_into() end)
+vim.keymap.set('n', '<F12>', function() dap.step_out() end)
+vim.keymap.set('n', '<Leader>b', function() dap.toggle_breakpoint() end)
+vim.keymap.set('n', '<Leader>B', function() dap.set_breakpoint() end)
+vim.keymap.set('n', '<Leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+vim.keymap.set('n', '<Leader>dr', function() dap.repl.open() end)
+vim.keymap.set('n', '<Leader>dl', function() dap.run_last() end)
+
+-- vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+--   require('dap.ui.widgets').hover()
+-- end)
+-- vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+--   require('dap.ui.widgets').preview()
+-- end)
+-- vim.keymap.set('n', '<Leader>df', function()
+--   local widgets = require('dap.ui.widgets')
+--   widgets.centered_float(widgets.frames)
+-- end)
+-- vim.keymap.set('n', '<Leader>ds', function()
+--   local widgets = require('dap.ui.widgets')
+--   widgets.centered_float(widgets.scopes)
+-- end)
+
