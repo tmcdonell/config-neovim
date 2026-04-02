@@ -102,15 +102,12 @@ return {
 
   { 'neovim/nvim-lspconfig'
   , config = function()
-      require('lspconfig').hls.setup
+      vim.lsp.config('lhs',
         { autostart = false
         , filetypes = { 'haskell', 'lhaskell', 'cabal' }
-        }
+        })
 
-      require('lspconfig').sourcekit.setup
-        { autostart = false
-        -- , filetypes = { 'c', 'cpp', 'swift' }
-        }
+      vim.lsp.enable('sourcekit')
 
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
         vim.lsp.handlers.hover, { border = 'rounded' })
