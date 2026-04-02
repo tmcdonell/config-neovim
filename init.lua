@@ -146,6 +146,11 @@ dap.adapters.gdb =
   , command = "gdb"
   , args = { "--interpreter=dap", "--eval-command", "set pretty print on" }
   }
+dap.adapters.lldb =
+  { type = "executable"
+  , name = "lldb"
+  , command = "lldb-dap"
+  }
 dap.configurations.c =
   { { name = "Launch"
     , type = "gdb"
@@ -159,6 +164,7 @@ dap.configurations.c =
         return (path and path ~= "") and path or dap.ABORT
       end
     , cwd = "${workspaceFolder}"
+    , stopOnEntry = true
     , stopAtBeginningOfMainSubprogram = true
     }
   , { name = "Select and attach to process"
@@ -194,6 +200,7 @@ dap.configurations.c =
     }
   }
 dap.configurations.cpp = dap.configurations.c
+dap.configurations.swift = dap.configurations.c
 
 local dapui = require("dapui")
 dap.listeners.before.attach.dapui_config = function()
